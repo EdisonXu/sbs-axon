@@ -1,17 +1,14 @@
 package com.edi.learn.axon.aggregates;
 
-import com.edi.learn.axon.commands.CreateOrderCommand;
 import com.edi.learn.axon.domain.OrderId;
+import com.edi.learn.axon.domain.Product;
 import com.edi.learn.axon.events.OrderCreatedEvent;
-import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.commandhandling.model.AggregateMember;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
 import java.util.Map;
-
-import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
 /**
  * Created by Edison Xu on 2017/3/7.
@@ -24,13 +21,14 @@ public class OrderAggregate {
     private String username;
 
     @AggregateMember
-    private Map<String, Long> products;
+    private Map<String, Product> products;
 
     public OrderAggregate(){}
 
-    @CommandHandler
-    public OrderAggregate(CreateOrderCommand command){
-        apply(new OrderCreatedEvent(command.getOrderId(), command.getUsername(), command.getProducts()));
+    public OrderAggregate(OrderId id, String username, Map<String, Product> products) {
+        this.id = id;
+        this.username = username;
+        this.products = products;
     }
 
     public OrderId getId() {
@@ -41,7 +39,7 @@ public class OrderAggregate {
         return username;
     }
 
-    public Map<String, Long> getProductList() {
+    public Map<String, Product> getProductList() {
         return products;
     }
 

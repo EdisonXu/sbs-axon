@@ -1,7 +1,7 @@
 package com.edi.learn.axon.transaction;
 
-import com.edi.learn.axon.aggregates.OrderCreatedEvent;
 import com.edi.learn.axon.commands.ReserveStockCommand;
+import com.edi.learn.axon.events.OrderCreatedEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.saga.SagaEventHandler;
 import org.axonframework.eventhandling.saga.StartSaga;

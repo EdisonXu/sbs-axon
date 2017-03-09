@@ -16,6 +16,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>lesson-1</module>
+        <module>lesson-3</module>
         <module>lesson-2</module>
     </modules>
 
