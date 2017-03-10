@@ -3,11 +3,13 @@ package com.edi.learn.axon.domain;
 import org.axonframework.common.Assert;
 import org.axonframework.common.IdentifierFactory;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
  * Created by Edison Xu on 2017/3/7.
  */
+@Embeddable
 public class AccountId implements Serializable {
 
     private static final long serialVersionUID = 7119961474083133148L;

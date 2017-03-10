@@ -11,6 +11,8 @@ import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.slf4j.Logger;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
@@ -19,7 +21,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 /**
  * Created by Edison Xu on 2017/3/7.
  */
-@Aggregate
+@Aggregate(repository = "accountRepository")
+@Entity
 public class BankAccount {
 
     private static final Logger LOGGER = getLogger(BankAccount.class);
@@ -60,5 +63,14 @@ public class BankAccount {
             this.balance = result;
             LOGGER.info("Withdraw {} from account {}, balance result: {}", event.getAmount(), accountId, balance);
         }
+    }
+
+    @Id
+    public String getAccountId() {
+        return accountId.toString();
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = new AccountId(accountId);
     }
 }
