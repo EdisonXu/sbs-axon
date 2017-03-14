@@ -1,10 +1,10 @@
 package com.edi.learn.axon;
 
 
-import com.edi.learn.axon.aggregates.BankAccount;
-import com.edi.learn.axon.commands.CreateAccountCommand;
-import com.edi.learn.axon.commands.WithdrawMoneyCommand;
-import com.edi.learn.axon.domain.AccountId;
+import com.edi.learn.axon.command.aggregates.BankAccount;
+import com.edi.learn.axon.command.commands.CreateAccountCommand;
+import com.edi.learn.axon.command.commands.WithdrawMoneyCommand;
+import com.edi.learn.axon.common.domain.AccountId;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;

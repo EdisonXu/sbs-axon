@@ -18,6 +18,7 @@
         <module>lesson-1</module>
         <module>lesson-2</module>
         <module>lesson-3</module>
+        <module>lesson-4</module>
         <module>jpa-test</module>
     </modules>
 
@@ -72,6 +73,16 @@
                 <artifactId>axon-spring</artifactId>
                 <version>${axon.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-spring-boot-autoconfigure</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <!--<dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-mongo</artifactId>
+                <version>${axon.version}</version>
+            </dependency>-->
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>

@@ -3,6 +3,7 @@ package com.edi.poc;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -13,9 +14,8 @@ public class BankAccount implements Serializable{
 
     private static final long serialVersionUID = -591341015965695559L;
 
-    @EmbeddedId
     private AccountId id;
-    @Column
+
     private String name;
 
     public BankAccount() {
@@ -26,14 +26,16 @@ public class BankAccount implements Serializable{
         this.name = name;
     }
 
-    public AccountId getId() {
-        return id;
+    @Id
+    public String getId() {
+        return id.toString();
     }
 
-    public void setId(AccountId id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = new AccountId(id);
     }
 
+    @Column
     public String getName() {
         return name;
     }
