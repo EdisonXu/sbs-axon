@@ -14,6 +14,7 @@ public class OrderEntry {
     private String id;
     private String username;
     private double payment;
+    private String status = "reserving";
     private Map<String, OrderProductEntry> products;
 
     public OrderEntry() {
@@ -56,5 +57,13 @@ public class OrderEntry {
 
     public void setProducts(Map<String, OrderProductEntry> products) {
         this.products = products;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

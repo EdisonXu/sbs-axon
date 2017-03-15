@@ -2,7 +2,9 @@ package com.edi.learn.axon.command.aggregates;
 
 import com.edi.learn.axon.common.domain.OrderId;
 import com.edi.learn.axon.common.domain.OrderProduct;
+import com.edi.learn.axon.common.events.OrderConfirmedEvent;
 import com.edi.learn.axon.common.events.OrderCreatedEvent;
+import com.edi.learn.axon.common.events.OrderCancelledEvent;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.commandhandling.model.AggregateMember;
 import org.axonframework.eventhandling.EventHandler;
@@ -11,6 +13,7 @@ import org.axonframework.spring.stereotype.Aggregate;
 import java.util.Map;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
+import static org.axonframework.commandhandling.model.AggregateLifecycle.markDeleted;
 
 /**
  * Created by Edison Xu on 2017/3/7.
@@ -75,5 +78,14 @@ public class OrderAggregate {
     public void removeProduct(String productId){
         OrderProduct product = this.products.remove(productId);
         payment = payment - product.getPrice() * product.getAmount();
+    }
+
+    public void delete() {
+        markDeleted();
+        apply(new OrderCancelledEvent(id));
+    }
+
+    public void confirm(){
+        apply(new OrderConfirmedEvent(id));
     }
 }

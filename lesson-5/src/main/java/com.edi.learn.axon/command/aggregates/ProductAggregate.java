@@ -1,7 +1,11 @@
 package com.edi.learn.axon.command.aggregates;
 
 import com.edi.learn.axon.command.commands.CreateProductCommand;
+import com.edi.learn.axon.common.domain.OrderId;
 import com.edi.learn.axon.common.events.ProductCreatedEvent;
+import com.edi.learn.axon.common.events.ProductNotEnoughEvent;
+import com.edi.learn.axon.common.events.ProductReservedEvent;
+import com.edi.learn.axon.common.events.ReserveCancelledEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventhandling.EventHandler;
@@ -41,4 +45,20 @@ public class ProductAggregate {
         this.stock = event.getStock();
         LOGGER.debug("Product [{}] {} {}x{} is created.", id,name,price,stock);
     }
+
+    public void reserve(OrderId orderId, int amount){
+        if(stock>=amount) {
+            stock = stock - amount;
+            apply(new ProductReservedEvent(orderId, id, stock));
+            LOGGER.info("Product {} is reserved {}", id, amount);
+        }else
+            apply(new ProductNotEnoughEvent(orderId, id));
+    }
+
+    public void cancellReserve(OrderId orderId, int amount){
+        stock +=amount;
+        apply(new ReserveCancelledEvent(orderId, id, stock));
+        LOGGER.info("Reservation rollback, product {} stock changed to {}", id, stock);
+    }
+
 }

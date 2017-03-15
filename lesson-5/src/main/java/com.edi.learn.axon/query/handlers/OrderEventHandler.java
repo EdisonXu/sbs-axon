@@ -1,5 +1,7 @@
 package com.edi.learn.axon.query.handlers;
 
+import com.edi.learn.axon.common.events.OrderCancelledEvent;
+import com.edi.learn.axon.common.events.OrderConfirmedEvent;
 import com.edi.learn.axon.common.events.OrderCreatedEvent;
 import com.edi.learn.axon.query.entries.OrderEntry;
 import com.edi.learn.axon.query.entries.OrderProductEntry;
@@ -41,4 +43,25 @@ public class OrderEventHandler {
         repository.save(order);
     }
 
+    @EventHandler
+    public void on(OrderConfirmedEvent event){
+        OrderEntry order = repository.findOne(event.getId().getIdentifier());
+        if(order==null){
+            LOGGER.error("Cannot find order with id {}", order.getId());
+            return;
+        }
+        order.setStatus("confirmed");
+        repository.save(order);
+    }
+
+    @EventHandler
+    public void on(OrderCancelledEvent event){
+        OrderEntry order = repository.findOne(event.getId().getIdentifier());
+        if(order==null){
+            LOGGER.error("Cannot find order with id {}", order.getId());
+            return;
+        }
+        order.setStatus("cancelled");
+        repository.save(order);
+    }
 }

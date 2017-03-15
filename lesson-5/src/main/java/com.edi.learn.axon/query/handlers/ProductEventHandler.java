@@ -1,6 +1,8 @@
 package com.edi.learn.axon.query.handlers;
 
 import com.edi.learn.axon.common.events.ProductCreatedEvent;
+import com.edi.learn.axon.common.events.ProductReservedEvent;
+import com.edi.learn.axon.common.events.ReserveCancelledEvent;
 import com.edi.learn.axon.query.entries.ProductEntry;
 import com.edi.learn.axon.query.repository.ProductEntryRepository;
 import org.axonframework.eventhandling.EventHandler;
@@ -27,5 +29,27 @@ public class ProductEventHandler {
         // update the data in the cache or db of the query side
         LOGGER.debug("repository data is updated");
         repository.save(new ProductEntry(event.getId(), event.getName(), event.getPrice(), event.getStock()));
+    }
+
+    @EventHandler
+    public void handle(ProductReservedEvent event){
+        ProductEntry product = repository.findOne(event.getProductId());
+        if(product==null){
+            LOGGER.error("Cannot find product with id {}", product.getId());
+            return;
+        }
+        product.setStock(event.getStock());
+        repository.save(product);
+    }
+
+    @EventHandler
+    public void handle(ReserveCancelledEvent event){
+        ProductEntry product = repository.findOne(event.getProductId());
+        if(product==null){
+            LOGGER.error("Cannot find product with id {}", product.getId());
+            return;
+        }
+        product.setStock(event.getStock());
+        repository.save(product);
     }
 }
