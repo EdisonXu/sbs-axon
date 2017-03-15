@@ -2,6 +2,7 @@ package com.edi.learn.axon.common.config;
 
 import com.edi.learn.axon.command.config.OrderConfig;
 import com.edi.learn.axon.command.config.ProductConfig;
+import com.edi.learn.axon.query.config.QueryDbConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import({
         AxonConfiguration.class,
+        QueryDbConfiguration.class,
         OrderConfig.class,
         ProductConfig.class
 })
