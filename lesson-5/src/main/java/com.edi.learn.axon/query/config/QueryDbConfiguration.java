@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
 /**
- * Created by Edison Xu on 2017/3/14.
+ * Created by Edison Xu on 2017/3/15.
  */
 @Configuration
-public class QueryDbConfiguration extends AbstractMongoConfiguration{
+public class QueryDbConfiguration extends AbstractMongoConfiguration {
 
     @Autowired
     private MongoClient mongoClient;

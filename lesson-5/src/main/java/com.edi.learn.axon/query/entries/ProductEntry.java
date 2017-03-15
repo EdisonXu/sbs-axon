@@ -1,8 +1,6 @@
 package com.edi.learn.axon.query.entries;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 /**
  * Remember to add {@code EntityScan }annotation in your start application.
@@ -11,16 +9,12 @@ import javax.persistence.Id;
  * <br>
  * Created by Edison Xu on 2017/3/14.
  */
-@Entity
 public class ProductEntry {
 
     @Id
     private String id;
-    @Column
     private String name;
-    @Column
     private long price;
-    @Column
     private int stock;
 
     public ProductEntry() {
