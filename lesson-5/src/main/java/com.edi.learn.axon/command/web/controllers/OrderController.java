@@ -3,6 +3,7 @@ package com.edi.learn.axon.command.web.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.edi.learn.axon.command.commands.CreateOrderCommand;
+import org.axonframework.commandhandling.callbacks.LoggingCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class OrderController {
                         return;
                     map.put(o.getString("id"), o.getInteger("number"));
                 }
-                commandGateway.sendAndWait(command);
+                commandGateway.send(command, LoggingCallback.INSTANCE);
                 responseCode = HttpServletResponse.SC_CREATED;
             }
         }

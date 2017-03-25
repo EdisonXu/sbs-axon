@@ -48,17 +48,26 @@ public class ProductAggregate {
 
     public void reserve(OrderId orderId, int amount){
         if(stock>=amount) {
-            stock = stock - amount;
-            apply(new ProductReservedEvent(orderId, id, stock));
-            LOGGER.info("Product {} is reserved {}", id, amount);
+            apply(new ProductReservedEvent(orderId, id, amount));
+
         }else
             apply(new ProductNotEnoughEvent(orderId, id));
     }
 
     public void cancellReserve(OrderId orderId, int amount){
-        stock +=amount;
         apply(new ReserveCancelledEvent(orderId, id, stock));
-        LOGGER.info("Reservation rollback, product {} stock changed to {}", id, stock);
     }
 
+    @EventHandler
+    public void on(ProductReservedEvent event){
+        int oriStock = stock;
+        stock = stock - event.getAmount();
+        LOGGER.info("Product {} stock change {} -> {}", id, oriStock, stock);
+    }
+
+    @EventHandler
+    public void on(ReserveCancelledEvent event){
+        stock +=event.getAmount();
+        LOGGER.info("Reservation rollback, product {} stock changed to {}", id, stock);
+    }
 }

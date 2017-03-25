@@ -41,4 +41,16 @@ public class ProductAggregate {
         this.stock = event.getStock();
         LOGGER.debug("Product [{}] {} {}x{} is created.", id,name,price,stock);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public long getPrice() {
+        return price;
+    }
 }

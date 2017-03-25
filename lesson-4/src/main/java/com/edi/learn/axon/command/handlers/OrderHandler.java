@@ -1,11 +1,11 @@
 package com.edi.learn.axon.command.handlers;
 
 import com.edi.learn.axon.command.aggregates.OrderAggregate;
+import com.edi.learn.axon.command.aggregates.ProductAggregate;
 import com.edi.learn.axon.command.commands.CreateOrderCommand;
 import com.edi.learn.axon.common.domain.OrderProduct;
-import com.edi.learn.axon.query.entries.ProductEntry;
-import com.edi.learn.axon.query.repository.ProductEntryRepository;
 import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.commandhandling.model.Aggregate;
 import org.axonframework.commandhandling.model.Repository;
 import org.axonframework.eventhandling.EventBus;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class OrderHandler {
     private Repository<OrderAggregate> repository;
 
     @Autowired
-    private ProductEntryRepository productQueryRepository;
+    private Repository<ProductAggregate> productRepository;
 
     @Autowired
     private EventBus eventBus;
@@ -39,8 +39,12 @@ public class OrderHandler {
         Map<String, OrderProduct> products = new HashMap<>();
         command.getProducts().forEach((productId,number)->{
             LOGGER.debug("Loading product information with productId: {}",productId);
-            ProductEntry entry = productQueryRepository.findOne(productId);
-            products.put(productId, new OrderProduct(productId, entry.getName(), entry.getPrice(), number));
+            Aggregate<ProductAggregate> aggregate = productRepository.load(productId);
+            products.put(productId,
+                    new OrderProduct(productId,
+                            aggregate.invoke(productAggregate -> productAggregate.getName()),
+                            aggregate.invoke(productAggregate -> productAggregate.getPrice()),
+                            number));
         });
         repository.newInstance(() -> new OrderAggregate(command.getOrderId(), command.getUsername(), products));
     }

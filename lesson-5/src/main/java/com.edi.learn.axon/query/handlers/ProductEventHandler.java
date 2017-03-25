@@ -38,7 +38,7 @@ public class ProductEventHandler {
             LOGGER.error("Cannot find product with id {}", product.getId());
             return;
         }
-        product.setStock(event.getStock());
+        product.setStock(event.getAmount());
         repository.save(product);
     }
 
@@ -49,7 +49,7 @@ public class ProductEventHandler {
             LOGGER.error("Cannot find product with id {}", product.getId());
             return;
         }
-        product.setStock(event.getStock());
+        product.setStock(event.getAmount());
         repository.save(product);
     }
 }

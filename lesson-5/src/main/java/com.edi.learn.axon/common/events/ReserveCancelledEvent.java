@@ -9,12 +9,12 @@ public class ReserveCancelledEvent {
 
     private OrderId orderId;
     private String productId;
-    private int stock;
+    private int amount;
 
-    public ReserveCancelledEvent(OrderId orderId, String productId, int stock) {
+    public ReserveCancelledEvent(OrderId orderId, String productId, int amount) {
         this.orderId = orderId;
         this.productId = productId;
-        this.stock = stock;
+        this.amount = amount;
     }
 
     public OrderId getOrderId() {
@@ -25,7 +25,7 @@ public class ReserveCancelledEvent {
         return productId;
     }
 
-    public int getStock() {
-        return stock;
+    public int getAmount() {
+        return amount;
     }
 }

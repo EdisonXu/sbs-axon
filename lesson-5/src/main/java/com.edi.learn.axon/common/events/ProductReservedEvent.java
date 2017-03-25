@@ -9,12 +9,15 @@ public class ProductReservedEvent {
 
     private OrderId orderId;
     private String productId;
-    private int stock;
+    private int amount;
 
-    public ProductReservedEvent(OrderId orderId, String productId, int stock) {
+    public ProductReservedEvent() {
+    }
+
+    public ProductReservedEvent(OrderId orderId, String productId, int amount) {
         this.orderId = orderId;
         this.productId = productId;
-        this.stock = stock;
+        this.amount = amount;
     }
 
     public OrderId getOrderId() {
@@ -25,7 +28,7 @@ public class ProductReservedEvent {
         return productId;
     }
 
-    public int getStock() {
-        return stock;
+    public int getAmount() {
+        return amount;
     }
 }

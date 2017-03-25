@@ -8,6 +8,7 @@ public class OrderProduct {
     private String name;
     private long price;
     private int amount;
+    private boolean reserved;
 
     public OrderProduct(String id, String name, long price, int amount) {
         this.id = id;
@@ -30,5 +31,13 @@ public class OrderProduct {
 
     public int getAmount() {
         return amount;
+    }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 }

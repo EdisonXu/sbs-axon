@@ -7,6 +7,7 @@ import com.edi.learn.axon.command.commands.RollbackReserveCommand;
 import com.edi.learn.axon.common.domain.OrderId;
 import com.edi.learn.axon.common.domain.OrderProduct;
 import com.edi.learn.axon.common.events.*;
+import com.edi.learn.axon.common.exception.OrderCreateFailedException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.saga.EndSaga;
 import org.axonframework.eventhandling.saga.SagaEventHandler;
@@ -31,7 +32,9 @@ public class OrderSaga {
     private OrderId orderIdentifier;
     //TODO: use ConcurrentHashMap instead?
     private Map<String, OrderProduct> toReserve;
-    private Map<String, OrderProduct> reserved;
+    private Map<String, OrderProduct> toRollback;
+    private int toReserveNumber;
+    private boolean needRollback;
 
     @Autowired
     private CommandGateway commandGateway;
@@ -41,7 +44,8 @@ public class OrderSaga {
     public void handle(OrderCreatedEvent event){
         this.orderIdentifier = event.getOrderId();
         this.toReserve = event.getProducts();
-        reserved = new HashMap<>();
+        toRollback = new HashMap<>();
+        toReserveNumber = toReserve.size();
         event.getProducts().forEach((id,product)->{
             ReserveProductCommand command = new ReserveProductCommand(orderIdentifier, id, product.getAmount());
             commandGateway.send(command);
@@ -51,34 +55,50 @@ public class OrderSaga {
     @SagaEventHandler(associationProperty = "orderId")
     public void handle(ProductNotEnoughEvent event){
         LOGGER.info("No enough item to buy");
-        if(reserved.size() == toReserve.size()){
-            reserved.forEach((id,product)->{
-                commandGateway.send(new RollbackReserveCommand(event.getOrderId(), id, product.getAmount()));
+        toReserveNumber--;
+        needRollback=true;
+        if(toReserveNumber==0)
+            tryFinish();
+    }
+
+    private void tryFinish() {
+        if(needRollback){
+            toReserve.forEach((id, product)->{
+                if(!product.isReserved())
+                    return;
+                toRollback.put(id, product);
+                commandGateway.send(new RollbackReserveCommand(orderIdentifier, id, product.getAmount()));
             });
-        }else
-            commandGateway.send(new RollbackOrderCommand(event.getOrderId()));
+            if(toRollback.isEmpty())
+                commandGateway.send(new RollbackOrderCommand(orderIdentifier));
+            return;
+        }
+        commandGateway.send(new ConfirmOrderCommand(orderIdentifier));
     }
 
     @SagaEventHandler(associationProperty = "orderId")
     public void handle(ReserveCancelledEvent event){
-        reserved.remove(event.getProductId());
-        if(reserved.isEmpty())
+        toRollback.remove(event.getProductId());
+        if(toRollback.isEmpty())
             commandGateway.send(new RollbackOrderCommand(event.getOrderId()));
     }
 
     @SagaEventHandler(associationProperty = "id", keyName = "orderId")
     @EndSaga
-    public void handle(OrderCancelledEvent event){
+    public void handle(OrderCancelledEvent event) throws OrderCreateFailedException {
         LOGGER.info("Order {} is cancelled", event.getId());
+        // throw exception here will not cause the onFailure() method in the command callback
+        //throw new OrderCreateFailedException("Not enough product to reserve!");
     }
 
     @SagaEventHandler(associationProperty = "orderId")
     public void handle(ProductReservedEvent event){
         OrderProduct reservedProduct = toReserve.get(event.getProductId());
-        reserved.put(event.getProductId(), reservedProduct);
+        reservedProduct.setReserved(true);
+        toReserveNumber--;
         //Q: will a concurrent issue raise?
-        if(reserved.size() == toReserve.size())
-            commandGateway.send(new ConfirmOrderCommand(orderIdentifier));
+        if(toReserveNumber ==0)
+            tryFinish();
     }
 
     @SagaEventHandler(associationProperty = "id", keyName = "orderId")
