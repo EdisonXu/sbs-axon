@@ -1,11 +1,11 @@
-package com.edi.learn.axon.command.handlers;
+package com.edi.learn.axon.handlers;
 
-import com.edi.learn.axon.command.aggregates.OrderAggregate;
-import com.edi.learn.axon.command.aggregates.ProductAggregate;
-import com.edi.learn.axon.command.commands.ConfirmOrderCommand;
-import com.edi.learn.axon.command.commands.CreateOrderCommand;
-import com.edi.learn.axon.command.commands.RollbackOrderCommand;
-import com.edi.learn.axon.common.domain.OrderProduct;
+import com.edi.learn.axon.aggregates.OrderAggregate;
+import com.edi.learn.axon.aggregates.ProductAggregate;
+import com.edi.learn.axon.commands.ConfirmOrderCommand;
+import com.edi.learn.axon.commands.CreateOrderCommand;
+import com.edi.learn.axon.commands.RollbackOrderCommand;
+import com.edi.learn.axon.domain.OrderProduct;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.Aggregate;
 import org.axonframework.commandhandling.model.Repository;
@@ -50,6 +50,7 @@ public class OrderHandler {
         });
         repository.newInstance(() -> new OrderAggregate(command.getOrderId(), command.getUsername(), products));
     }
+
 
     @CommandHandler
     public void handle(RollbackOrderCommand command){

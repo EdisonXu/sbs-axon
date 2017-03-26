@@ -20,6 +20,7 @@
         <module>lesson-3</module>
         <module>lesson-4</module>
         <module>lesson-5</module>
+        <module>lesson-6</module>
         <module>jpa-test</module>
     </modules>
 
@@ -77,6 +78,11 @@
             <dependency>
                 <groupId>org.axonframework</groupId>
                 <artifactId>axon-spring-boot-autoconfigure</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-amqp</artifactId>
                 <version>${axon.version}</version>
             </dependency>
             <!--<dependency>

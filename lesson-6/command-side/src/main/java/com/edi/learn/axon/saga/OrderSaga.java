@@ -1,13 +1,12 @@
-package com.edi.learn.axon.command.saga;
+package com.edi.learn.axon.saga;
 
-import com.edi.learn.axon.command.commands.ConfirmOrderCommand;
-import com.edi.learn.axon.command.commands.ReserveProductCommand;
-import com.edi.learn.axon.command.commands.RollbackOrderCommand;
-import com.edi.learn.axon.command.commands.RollbackReserveCommand;
-import com.edi.learn.axon.common.domain.OrderId;
-import com.edi.learn.axon.common.domain.OrderProduct;
-import com.edi.learn.axon.common.events.*;
-import com.edi.learn.axon.common.exception.OrderCreateFailedException;
+import com.edi.learn.axon.commands.ConfirmOrderCommand;
+import com.edi.learn.axon.commands.ReserveProductCommand;
+import com.edi.learn.axon.commands.RollbackOrderCommand;
+import com.edi.learn.axon.commands.RollbackReserveCommand;
+import com.edi.learn.axon.domain.OrderId;
+import com.edi.learn.axon.domain.OrderProduct;
+import com.edi.learn.axon.events.*;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.saga.EndSaga;
 import org.axonframework.eventhandling.saga.SagaEventHandler;
@@ -50,7 +49,6 @@ public class OrderSaga {
             ReserveProductCommand command = new ReserveProductCommand(orderIdentifier, id, product.getAmount());
             commandGateway.send(command);
         });
-
     }
 
     @SagaEventHandler(associationProperty = "orderId")
@@ -86,10 +84,8 @@ public class OrderSaga {
 
     @SagaEventHandler(associationProperty = "id", keyName = "orderId")
     @EndSaga
-    public void handle(OrderCancelledEvent event) throws OrderCreateFailedException {
+    public void handle(OrderCancelledEvent event) {
         LOGGER.info("Order {} is cancelled", event.getId());
-        // throw exception here will not cause the onFailure() method in the command callback
-        //throw new OrderCreateFailedException("Not enough product to reserve!");
     }
 
     @SagaEventHandler(associationProperty = "orderId")
