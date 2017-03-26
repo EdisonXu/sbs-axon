@@ -1,9 +1,9 @@
 package com.edi.learn.axon.handlers;
 
 import com.edi.learn.axon.entries.ProductEntry;
-import com.edi.learn.axon.events.ProductCreatedEvent;
-import com.edi.learn.axon.events.ProductReservedEvent;
-import com.edi.learn.axon.events.ReserveCancelledEvent;
+import com.edi.learn.axon.events.product.ProductCreatedEvent;
+import com.edi.learn.axon.events.product.ProductReservedEvent;
+import com.edi.learn.axon.events.product.ReserveCancelledEvent;
 import com.edi.learn.axon.repository.ProductEntryRepository;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;

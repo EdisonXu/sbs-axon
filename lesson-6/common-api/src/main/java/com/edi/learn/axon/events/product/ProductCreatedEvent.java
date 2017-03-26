@@ -1,4 +1,4 @@
-package com.edi.learn.axon.events;
+package com.edi.learn.axon.events.product;
 
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
 

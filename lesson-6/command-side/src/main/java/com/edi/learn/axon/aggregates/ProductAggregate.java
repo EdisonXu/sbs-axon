@@ -2,10 +2,10 @@ package com.edi.learn.axon.aggregates;
 
 import com.edi.learn.axon.commands.CreateProductCommand;
 import com.edi.learn.axon.domain.OrderId;
-import com.edi.learn.axon.events.ProductCreatedEvent;
-import com.edi.learn.axon.events.ProductNotEnoughEvent;
-import com.edi.learn.axon.events.ProductReservedEvent;
-import com.edi.learn.axon.events.ReserveCancelledEvent;
+import com.edi.learn.axon.events.product.ProductCreatedEvent;
+import com.edi.learn.axon.events.product.ProductNotEnoughEvent;
+import com.edi.learn.axon.events.product.ProductReservedEvent;
+import com.edi.learn.axon.events.product.ReserveCancelledEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventhandling.EventHandler;

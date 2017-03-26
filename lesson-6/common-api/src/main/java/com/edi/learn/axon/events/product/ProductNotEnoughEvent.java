@@ -1,4 +1,4 @@
-package com.edi.learn.axon.events;
+package com.edi.learn.axon.events.product;
 
 
 import com.edi.learn.axon.domain.OrderId;

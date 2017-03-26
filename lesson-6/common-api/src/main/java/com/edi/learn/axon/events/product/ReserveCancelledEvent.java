@@ -1,4 +1,4 @@
-package com.edi.learn.axon.events;
+package com.edi.learn.axon.events.product;
 
 
 import com.edi.learn.axon.domain.OrderId;
@@ -7,17 +7,17 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier;
 /**
  * Created by Edison Xu on 2017/3/15.
  */
-public class ProductReservedEvent {
+public class ReserveCancelledEvent {
 
     private OrderId orderId;
     @TargetAggregateIdentifier
     private String productId;
     private int amount;
 
-    public ProductReservedEvent() {
+    public ReserveCancelledEvent() {
     }
 
-    public ProductReservedEvent(OrderId orderId, String productId, int amount) {
+    public ReserveCancelledEvent(OrderId orderId, String productId, int amount) {
         this.orderId = orderId;
         this.productId = productId;
         this.amount = amount;

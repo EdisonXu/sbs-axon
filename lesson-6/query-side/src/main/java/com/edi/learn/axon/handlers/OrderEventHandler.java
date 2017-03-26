@@ -2,9 +2,9 @@ package com.edi.learn.axon.handlers;
 
 import com.edi.learn.axon.entries.OrderEntry;
 import com.edi.learn.axon.entries.OrderProductEntry;
-import com.edi.learn.axon.events.OrderCancelledEvent;
-import com.edi.learn.axon.events.OrderConfirmedEvent;
-import com.edi.learn.axon.events.OrderCreatedEvent;
+import com.edi.learn.axon.events.order.OrderCancelledEvent;
+import com.edi.learn.axon.events.order.OrderConfirmedEvent;
+import com.edi.learn.axon.events.order.OrderCreatedEvent;
 import com.edi.learn.axon.repository.OrderEntryRepository;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
