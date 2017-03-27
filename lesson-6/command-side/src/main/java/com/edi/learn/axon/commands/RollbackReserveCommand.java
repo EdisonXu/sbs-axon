@@ -2,15 +2,20 @@ package com.edi.learn.axon.commands;
 
 
 import com.edi.learn.axon.domain.OrderId;
+import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 /**
  * Created by Edison Xu on 2017/3/15.
  */
 public class RollbackReserveCommand {
 
+    @TargetAggregateIdentifier
     private OrderId orderId;
     private String productId;
     private int number;
+
+    public RollbackReserveCommand() {
+    }
 
     public RollbackReserveCommand(OrderId orderId, String productId, int number) {
         this.orderId = orderId;
@@ -28,5 +33,17 @@ public class RollbackReserveCommand {
 
     public int getNumber() {
         return number;
+    }
+
+    public void setOrderId(OrderId orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

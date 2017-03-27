@@ -2,6 +2,7 @@ package com.edi.learn.axon.commands;
 
 
 import com.edi.learn.axon.domain.OrderId;
+import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 import java.util.Map;
 
@@ -10,9 +11,13 @@ import java.util.Map;
  */
 public class CreateOrderCommand {
 
+    @TargetAggregateIdentifier
     private OrderId orderId;
     private String username;
     private Map<String, Integer> products;
+
+    public CreateOrderCommand() {
+    }
 
     public CreateOrderCommand(String username, Map<String, Integer> products) {
         this.orderId = new OrderId();
@@ -30,5 +35,17 @@ public class CreateOrderCommand {
 
     public Map<String, Integer> getProducts() {
         return products;
+    }
+
+    public void setOrderId(OrderId orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setProducts(Map<String, Integer> products) {
+        this.products = products;
     }
 }
