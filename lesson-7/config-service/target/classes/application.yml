@@ -1,0 +1,30 @@
+server:
+  port: 1000
+
+spring:
+  # Active reading config from local file system
+  profiles:
+    active: native
+
+  application:
+    name: config-service
+
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:///D:/Repository/github/cqrs/axon/sbs-axon/lesson-7/configs
+          #searchLocations: /usr/edi/spring/configs
+   #     git:
+          # uri: https://github.com/sunnykaka/mysteam-config-repo
+   #       uri: file:///D:/Repository/github/spring-cloud-poc/config-server/configs
+    #      basedir: target/config
+   #       searchPaths: "*"
+
+management:
+  context-path: /admin
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/

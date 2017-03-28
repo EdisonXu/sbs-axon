@@ -10,12 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>lesson-4</artifactId>
+    <version>4</version>
 
     <dependencies>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>

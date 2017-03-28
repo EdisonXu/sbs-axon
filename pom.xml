@@ -22,6 +22,7 @@
         <module>lesson-5</module>
         <module>lesson-6</module>
         <module>jpa-test</module>
+        <module>lesson-7</module>
     </modules>
 
     <properties>

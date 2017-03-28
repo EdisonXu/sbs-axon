@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: proxy-service
+
+# HTTP Server
+server:
+  port: 1112 #HTTP(Tomcat) port
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    product-service: /product/**
+    order-service: /order/**
+
+proxy:
+  auth:
+    routes:
+      echo: none
+
+security:
+  user:
+    name: test
+    password: test

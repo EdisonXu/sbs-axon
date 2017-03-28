@@ -1,0 +1,20 @@
+# Configure this Discovery Server
+eureka:
+  instance:
+    hostname: localhost
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds: 5
+  client: #Not a client, don't register with yourself
+    registerWithEureka: false
+    fetchRegistry: false
+    healthcheck:
+      enabled: true
+  server:
+      enable-self-preservation: false
+
+endpoints:
+ shutdown:
+  enabled: true
+
+server:
+  port: 1111 #HTTP(Tomcat) port

@@ -1,0 +1,11 @@
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\repository\OrderEntryRepository.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\repository\ProductEntryRepository.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\entries\OrderProductEntry.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\entries\ProductEntry.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\main\Application.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\config\QueryDbConfiguration.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\entries\OrderEntry.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\config\AMQPConfiguration.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\config\AxonConfiguration.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\handlers\ProductEventHandler.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-6\query-side\src\main\java\com\edi\learn\axon\handlers\OrderEventHandler.java

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: order-service
+
+  cloud:
+    config:
+      discovery.enabled: true
+      discovery.serviceId: config-service
+      failFast: true
+
+# Discovery Server Access
+eureka:
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${config.host:10.1.110.21}:1111/eureka/
+
+server:
+  port: 8080 #HTTP(Tomcat) port

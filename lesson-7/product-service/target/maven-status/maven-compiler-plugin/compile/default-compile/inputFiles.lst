@@ -1,0 +1,13 @@
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\query\entries\OrderProductEntry.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\query\config\QueryDbConfiguration.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\command\commands\RollbackReserveCommand.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\command\commands\ReserveProductCommand.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\command\controllers\ProductController.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\query\handlers\ProductEventHandler.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\query\entries\ProductEntry.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\main\Application.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\command\commands\CreateProductCommand.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\query\repository\ProductEntryRepository.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\command\aggregates\ProductAggregate.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\command\handlers\ProductHandler.java
+D:\Repository\github\cqrs\axon\sbs-axon\lesson-7\product-service\src\main\java\com\edi\learn\cloud\command\config\AMQPConfiguration.java
