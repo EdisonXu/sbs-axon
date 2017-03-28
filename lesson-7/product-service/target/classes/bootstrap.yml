@@ -8,15 +8,14 @@ spring:
       discovery.serviceId: config-service
       failFast: true
   datasource:
-      url: jdbc:mysql://10.1.110.21:3306/cqrs
+      url: jdbc:mysql://112.124.34.47:33309/axon
       driverClassName: com.mysql.jdbc.Driver
-      username: root
-      password: 111111
+      username: axon
+      password: axon
       validation-query: SELECT 1;
       initial-size: 2
       sql-script-encoding: UTF-8
   jpa:
-    database: mysql
     show-sql: true
     hibernate.ddl-auto: create-drop
   # mq for event bus
@@ -25,6 +24,11 @@ spring:
     port: 5672
     username: axon
     password: axon
+  data:
+    mongodb:
+      host: 112.124.34.47
+      port: 27017
+      database: axon
 
 # Discovery Server Access
 eureka:
@@ -35,12 +39,6 @@ eureka:
 
 server:
   port: 8081 #HTTP(Tomcat) port
-
-# mongo for query
-mongo:
-  url: 112.124.34.47
-  port: 27017
-  dbname: axon
 
 # enable axon Amqp support
 axon:

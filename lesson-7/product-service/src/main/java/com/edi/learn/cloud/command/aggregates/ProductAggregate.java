@@ -18,7 +18,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 /**
  * Created by Edison Xu on 2017/3/28.
  */
-@Aggregate
+@Aggregate(repository = "productRepository")
 public class ProductAggregate {
 
     private static final Logger LOGGER = getLogger(ProductAggregate.class);
