@@ -2,7 +2,6 @@ spring:
   application:
     name: proxy-service
 
-
   cloud:
     config:
       discovery.enabled: true

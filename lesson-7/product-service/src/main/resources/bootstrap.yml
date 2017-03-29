@@ -6,18 +6,18 @@ spring:
     config:
       discovery.enabled: true
       discovery.serviceId: config-service
-      failFast: true
+      failFast: false
   datasource:
-      url: jdbc:mysql://112.124.34.47:33309/axon
+      url: jdbc:mysql://10.1.110.21:3306/cqrs
       driverClassName: com.mysql.jdbc.Driver
-      username: axon
-      password: axon
+      username: root
+      password: 111111
       validation-query: SELECT 1;
       initial-size: 2
       sql-script-encoding: UTF-8
   jpa:
     show-sql: true
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
   # mq for event bus
   rabbitmq:
     host: 112.124.34.47
@@ -26,26 +26,29 @@ spring:
     password: axon
   data:
     mongodb:
-      host: 112.124.34.47
+      host: 10.1.110.24
       port: 27017
       database: axon
 
 # Discovery Server Access
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://${config.host:10.1.110.21}:1111/eureka/
 
 server:
-  port: 8081 #HTTP(Tomcat) port
+  port: 8083 #HTTP(Tomcat) port
 
 # enable axon Amqp support
 axon:
   amqp:
     exchange: Axon.EventBus
   distributed:
+    enabled: true
     jgroups:
-      enabled: true
+      enabled: false
       gossip:
-        autoStart: true
+        autoStart: false

@@ -1,9 +1,12 @@
 package com.edi.learn.cloud.domain;
 
+import org.axonframework.commandhandling.TargetAggregateIdentifier;
+
 /**
  * Created by Edison on 2017/3/9.
  */
 public class OrderProduct {
+    @TargetAggregateIdentifier
     private String id;
     private String name;
     private long price;

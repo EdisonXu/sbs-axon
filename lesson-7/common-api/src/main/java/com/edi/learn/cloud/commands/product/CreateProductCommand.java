@@ -1,4 +1,4 @@
-package com.edi.learn.cloud.command.commands;
+package com.edi.learn.cloud.commands.product;
 
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
 

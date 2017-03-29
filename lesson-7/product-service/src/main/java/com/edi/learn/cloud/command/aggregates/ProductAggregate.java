@@ -1,6 +1,6 @@
 package com.edi.learn.cloud.command.aggregates;
 
-import com.edi.learn.cloud.command.commands.CreateProductCommand;
+import com.edi.learn.cloud.commands.product.CreateProductCommand;
 import com.edi.learn.cloud.domain.OrderId;
 import com.edi.learn.cloud.events.product.ProductCreatedEvent;
 import com.edi.learn.cloud.events.product.ProductNotEnoughEvent;

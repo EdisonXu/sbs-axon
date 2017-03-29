@@ -1,13 +1,9 @@
 com\edi\learn\cloud\command\aggregates\ProductAggregate.class
+com\edi\learn\cloud\command\config\PersistenceConfiguration.class
+com\edi\learn\cloud\command\handlers\ProductHandler.class
 com\edi\learn\cloud\query\entries\ProductEntry.class
 com\edi\learn\cloud\command\config\AMQPConfiguration.class
 com\edi\learn\cloud\query\handlers\ProductEventHandler.class
 com\edi\learn\cloud\command\controllers\ProductController.class
-com\edi\learn\cloud\command\commands\CreateProductCommand.class
-com\edi\learn\cloud\command\commands\RollbackReserveCommand.class
-com\edi\learn\cloud\query\entries\OrderProductEntry.class
-com\edi\learn\cloud\command\handlers\ProductHandler.class
-com\edi\learn\cloud\query\config\QueryDbConfiguration.class
 com\edi\learn\cloud\query\repository\ProductEntryRepository.class
-com\edi\learn\cloud\command\commands\ReserveProductCommand.class
 com\edi\learn\cloud\main\Application.class

@@ -1,23 +1,23 @@
-package com.edi.learn.cloud.command.commands;
+package com.edi.learn.cloud.commands.product;
 
 
 import com.edi.learn.cloud.domain.OrderId;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 /**
- * Created by Edison Xu on 2017/3/9.
+ * Created by Edison Xu on 2017/3/15.
  */
-public class ReserveProductCommand {
+public class RollbackReserveCommand {
 
     @TargetAggregateIdentifier
     private OrderId orderId;
     private String productId;
     private int number;
 
-    public ReserveProductCommand() {
+    public RollbackReserveCommand() {
     }
 
-    public ReserveProductCommand(OrderId orderId, String productId, int number) {
+    public RollbackReserveCommand(OrderId orderId, String productId, int number) {
         this.orderId = orderId;
         this.productId = productId;
         this.number = number;

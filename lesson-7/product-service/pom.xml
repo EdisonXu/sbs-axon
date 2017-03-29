@@ -11,6 +11,10 @@
 
     <artifactId>product-service</artifactId>
 
+    <properties>
+        <start-class>com.edi.learn.cloud.main.Application</start-class>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.edi.learn</groupId>
@@ -28,10 +32,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <!--<dependency>
@@ -41,8 +41,22 @@
         </dependency>-->
         <dependency>
             <groupId>org.axonframework</groupId>
+            <artifactId>axon-distributed-commandbus-springcloud</artifactId>
+            <version>${axon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
             <artifactId>axon-spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

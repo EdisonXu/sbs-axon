@@ -1,1 +1,14 @@
-com\edi\learn\axon\main\Application.class
+com\edi\learn\cloud\command\config\PersistenceConfiguration.class
+com\edi\learn\cloud\common\web\clients\ProductService.class
+com\edi\learn\cloud\command\handlers\OrderHandler.class
+com\edi\learn\cloud\command\config\AMQPConfiguration.class
+com\edi\learn\cloud\command\controllers\ProductController.class
+com\edi\learn\cloud\query\entries\OrderProductEntry.class
+com\edi\learn\cloud\command\saga\OrderSaga.class
+com\edi\learn\cloud\query\handlers\OrderEventHandler.class
+com\edi\learn\cloud\command\controllers\OrderController.class
+com\edi\learn\cloud\query\entries\OrderEntry.class
+com\edi\learn\cloud\query\repository\OrderEntryRepository.class
+com\edi\learn\cloud\common\web\dto\ProductDto.class
+com\edi\learn\cloud\command\aggregate\OrderAggregate.class
+com\edi\learn\cloud\main\Application.class

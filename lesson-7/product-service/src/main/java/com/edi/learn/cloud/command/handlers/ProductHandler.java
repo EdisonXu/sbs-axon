@@ -1,8 +1,8 @@
 package com.edi.learn.cloud.command.handlers;
 
 import com.edi.learn.cloud.command.aggregates.ProductAggregate;
-import com.edi.learn.cloud.command.commands.ReserveProductCommand;
-import com.edi.learn.cloud.command.commands.RollbackReserveCommand;
+import com.edi.learn.cloud.commands.product.ReserveProductCommand;
+import com.edi.learn.cloud.commands.product.RollbackReserveCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.Aggregate;
 import org.axonframework.commandhandling.model.Repository;
