@@ -6,4 +6,4 @@ As mentioned in Lesson-2, Axon framework supports two mechanisms to maintain the
 
 In this lesson, we implement the event sourcing repository, which is the default option when using axon-spring-boot-autoconfigure
 module.
-All the events will be stored in the H2 db through JPA.
+All the events will be stored in the MySql through JPA.
