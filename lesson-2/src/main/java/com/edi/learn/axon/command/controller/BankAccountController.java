@@ -1,4 +1,4 @@
-package com.edi.learn.axon.controller;
+package com.edi.learn.axon.command.controller;
 
 import com.edi.learn.axon.command.commands.CreateAccountCommand;
 import com.edi.learn.axon.command.commands.WithdrawMoneyCommand;
@@ -37,7 +37,7 @@ public class BankAccountController {
         commandGateway.send(new CreateAccountCommand(id, "MyAccount",1000));
         commandGateway.send(new WithdrawMoneyCommand(id, 500));
         commandGateway.send(new WithdrawMoneyCommand(id, 300));
-        /*config.commandBus().dispatch(asCommandMessage(new CreateAccountCommand(id, "MyAccount", 1000)));
-        config.commandBus().dispatch(asCommandMessage(new WithdrawMoneyCommand(id, 500)));*/
+        commandGateway.send(new CreateAccountCommand(id, "MyAccount", 1000));
+        commandGateway.send(new WithdrawMoneyCommand(id, 500));
     }
 }
