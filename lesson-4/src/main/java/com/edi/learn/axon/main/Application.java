@@ -18,7 +18,7 @@ import static org.slf4j.LoggerFactory.getLogger;
         "org.axonframework.eventsourcing.eventstore.jpa",
         "org.axonframework.eventhandling.saga.repository.jpa",
         "org.axonframework.eventhandling.tokenstore.jpa"})
-@EnableJpaRepositories(basePackages = {"com.edi.learn"})
+@EnableJpaRepositories(basePackages = {"com.edi.learn.axon.query"})
 public class Application {
 
     private static final Logger LOGGER = getLogger(Application.class);

@@ -20,7 +20,7 @@ import java.util.Arrays;
  * Created by Edison Xu on 2017/3/7.
  */
 @Configuration
-public class AxonConfiguration {
+public class CommandRepositoryConfiguration {
 
     @Value("${mongodb.url}")
     private String mongoUrl;
