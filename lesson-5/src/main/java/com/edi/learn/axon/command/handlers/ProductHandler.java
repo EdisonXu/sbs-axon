@@ -2,7 +2,7 @@ package com.edi.learn.axon.command.handlers;
 
 import com.edi.learn.axon.command.aggregates.ProductAggregate;
 import com.edi.learn.axon.command.commands.ReserveProductCommand;
-import com.edi.learn.axon.command.commands.RollbackReserveCommand;
+import com.edi.learn.axon.command.commands.RollbackReservationCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.Aggregate;
 import org.axonframework.commandhandling.model.Repository;
@@ -30,7 +30,7 @@ public class ProductHandler {
     }
 
     @CommandHandler
-    public void on(RollbackReserveCommand command){
+    public void on(RollbackReservationCommand command){
         Aggregate<ProductAggregate> aggregate = repository.load(command.getProductId());
         aggregate.execute(aggregateRoot->aggregateRoot.cancellReserve(command.getOrderId(), command.getNumber()));
     }

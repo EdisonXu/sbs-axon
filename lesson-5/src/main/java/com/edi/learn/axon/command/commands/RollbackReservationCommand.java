@@ -5,13 +5,13 @@ import com.edi.learn.axon.common.domain.OrderId;
 /**
  * Created by Edison Xu on 2017/3/15.
  */
-public class RollbackReserveCommand {
+public class RollbackReservationCommand {
 
     private OrderId orderId;
     private String productId;
     private int number;
 
-    public RollbackReserveCommand(OrderId orderId, String productId, int number) {
+    public RollbackReservationCommand(OrderId orderId, String productId, int number) {
         this.orderId = orderId;
         this.productId = productId;
         this.number = number;

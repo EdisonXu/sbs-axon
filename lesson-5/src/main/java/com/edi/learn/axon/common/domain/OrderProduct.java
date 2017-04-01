@@ -10,6 +10,9 @@ public class OrderProduct {
     private int amount;
     private boolean reserved;
 
+    public OrderProduct() {
+    }
+
     public OrderProduct(String id, String name, long price, int amount) {
         this.id = id;
         this.name = name;
@@ -39,5 +42,21 @@ public class OrderProduct {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

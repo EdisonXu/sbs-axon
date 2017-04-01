@@ -2,7 +2,9 @@ package com.edi.learn.axon.common.config;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
+import org.axonframework.eventhandling.saga.repository.SagaStore;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
+import org.axonframework.mongo.eventhandling.saga.repository.MongoSagaStore;
 import org.axonframework.mongo.eventsourcing.eventstore.DefaultMongoTemplate;
 import org.axonframework.mongo.eventsourcing.eventstore.MongoEventStorageEngine;
 import org.axonframework.mongo.eventsourcing.eventstore.MongoFactory;
@@ -58,10 +60,10 @@ public class AxonConfiguration {
         return mongoFactory.createMongo();
     }
 
-    /*@Bean
+    @Bean
     public SagaStore sagaStore(){
         org.axonframework.mongo.eventhandling.saga.repository.MongoTemplate mongoTemplate =
-                new org.axonframework.mongo.eventhandling.saga.repository.DefaultMongoTemplate(mongoClient());
+                new org.axonframework.mongo.eventhandling.saga.repository.DefaultMongoTemplate(mongoClient(), mongoDbName, "sagas");
         return new MongoSagaStore(mongoTemplate, axonJsonSerializer());
-    }*/
+    }
 }

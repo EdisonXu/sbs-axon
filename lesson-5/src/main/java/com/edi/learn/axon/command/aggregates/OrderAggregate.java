@@ -2,9 +2,9 @@ package com.edi.learn.axon.command.aggregates;
 
 import com.edi.learn.axon.common.domain.OrderId;
 import com.edi.learn.axon.common.domain.OrderProduct;
+import com.edi.learn.axon.common.events.OrderCancelledEvent;
 import com.edi.learn.axon.common.events.OrderConfirmedEvent;
 import com.edi.learn.axon.common.events.OrderCreatedEvent;
-import com.edi.learn.axon.common.events.OrderCancelledEvent;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.commandhandling.model.AggregateMember;
 import org.axonframework.eventhandling.EventHandler;
@@ -25,6 +25,7 @@ public class OrderAggregate {
     private OrderId id;
     private String username;
     private double payment;
+    private String state="processing";
 
     @AggregateMember
     private Map<String, OrderProduct> products;
@@ -47,18 +48,8 @@ public class OrderAggregate {
         return products;
     }
 
-    @EventHandler
-    public void on(OrderCreatedEvent event){
-        this.id = event.getOrderId();
-        this.username = event.getUsername();
-        this.products = event.getProducts();
-        computePrice();
-    }
-
-    private void computePrice() {
-        products.forEach((id, product) -> {
-            payment += product.getPrice() * product.getAmount();
-        });
+    public String getState() {
+        return state;
     }
 
     /**
@@ -81,11 +72,35 @@ public class OrderAggregate {
     }
 
     public void delete() {
-        markDeleted();
         apply(new OrderCancelledEvent(id));
     }
 
     public void confirm(){
         apply(new OrderConfirmedEvent(id));
+    }
+
+    @EventHandler
+    public void on(OrderCreatedEvent event){
+        this.id = event.getOrderId();
+        this.username = event.getUsername();
+        this.products = event.getProducts();
+        computePrice();
+    }
+
+    private void computePrice() {
+        products.forEach((id, product) -> {
+            payment += product.getPrice() * product.getAmount();
+        });
+    }
+
+    @EventHandler
+    public void on(OrderConfirmedEvent event){
+        this.state = "confirmed";
+    }
+
+    @EventHandler
+    public void on(OrderCancelledEvent event){
+        this.state = "deleted";
+        markDeleted();
     }
 }

@@ -3,7 +3,7 @@ package com.edi.learn.axon.command.saga;
 import com.edi.learn.axon.command.commands.ConfirmOrderCommand;
 import com.edi.learn.axon.command.commands.ReserveProductCommand;
 import com.edi.learn.axon.command.commands.RollbackOrderCommand;
-import com.edi.learn.axon.command.commands.RollbackReserveCommand;
+import com.edi.learn.axon.command.commands.RollbackReservationCommand;
 import com.edi.learn.axon.common.domain.OrderId;
 import com.edi.learn.axon.common.domain.OrderProduct;
 import com.edi.learn.axon.common.events.*;
@@ -37,7 +37,7 @@ public class OrderSaga {
     private boolean needRollback;
 
     @Autowired
-    private CommandGateway commandGateway;
+    private transient CommandGateway commandGateway;
 
     @StartSaga
     @SagaEventHandler(associationProperty = "orderId")
@@ -50,7 +50,6 @@ public class OrderSaga {
             ReserveProductCommand command = new ReserveProductCommand(orderIdentifier, id, product.getAmount());
             commandGateway.send(command);
         });
-
     }
 
     @SagaEventHandler(associationProperty = "orderId")
@@ -68,7 +67,7 @@ public class OrderSaga {
                 if(!product.isReserved())
                     return;
                 toRollback.put(id, product);
-                commandGateway.send(new RollbackReserveCommand(orderIdentifier, id, product.getAmount()));
+                commandGateway.send(new RollbackReservationCommand(orderIdentifier, id, product.getAmount()));
             });
             if(toRollback.isEmpty())
                 commandGateway.send(new RollbackOrderCommand(orderIdentifier));
@@ -104,8 +103,9 @@ public class OrderSaga {
 
     @SagaEventHandler(associationProperty = "id", keyName = "orderId")
     @EndSaga
-    public void handle(OrderConfirmedEvent event){
+    public void handle(OrderConfirmedEvent event) throws InterruptedException {
         LOGGER.info("Order {} is confirmed", event.getId());
+        //Thread.sleep(10000);
     }
 
 }
