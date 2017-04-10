@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.edi.learn</groupId>
-            <artifactId>common-api</artifactId>
+            <artifactId>common-part</artifactId>
             <version>6</version>
         </dependency>
         <dependency>

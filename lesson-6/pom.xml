@@ -13,7 +13,7 @@
     <version>6</version>
     <packaging>pom</packaging>
     <modules>
-        <module>common-api</module>
+        <module>common-part</module>
         <module>command-side</module>
         <module>query-side</module>
     </modules>
