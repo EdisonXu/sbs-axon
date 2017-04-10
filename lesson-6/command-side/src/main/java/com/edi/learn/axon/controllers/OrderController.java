@@ -8,10 +8,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -36,7 +33,7 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody(required = true) JSONObject input){
-        LOGGER.info(input.toJSONString());
+        LOGGER.debug(input.toJSONString());
 
         int responseCode = HttpServletResponse.SC_BAD_REQUEST;
 
@@ -59,6 +56,5 @@ public class OrderController {
 
         response.setStatus(responseCode);
     }
-
 
 }

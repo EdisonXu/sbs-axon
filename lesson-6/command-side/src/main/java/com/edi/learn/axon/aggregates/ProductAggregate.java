@@ -1,11 +1,10 @@
 package com.edi.learn.axon.aggregates;
 
 import com.edi.learn.axon.commands.CreateProductCommand;
+import com.edi.learn.axon.commands.DecreaseStockCommand;
+import com.edi.learn.axon.commands.IncreaseStockCommand;
 import com.edi.learn.axon.domain.OrderId;
-import com.edi.learn.axon.events.product.ProductCreatedEvent;
-import com.edi.learn.axon.events.product.ProductNotEnoughEvent;
-import com.edi.learn.axon.events.product.ProductReservedEvent;
-import com.edi.learn.axon.events.product.ReserveCancelledEvent;
+import com.edi.learn.axon.events.product.*;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventhandling.EventHandler;
@@ -35,6 +34,16 @@ public class ProductAggregate {
     @CommandHandler
     public ProductAggregate(CreateProductCommand command) {
         apply(new ProductCreatedEvent(command.getId(),command.getName(),command.getPrice(),command.getStock()));
+    }
+
+    @CommandHandler
+    public void handle(IncreaseStockCommand command) {
+        apply(new IncreaseStockEvent(command.getId(),command.getNumber()));
+    }
+
+    @CommandHandler
+    public void handle(DecreaseStockCommand command) {
+        apply(new DecreaseStockEvent(command.getId(),command.getNumber()));
     }
 
     @EventHandler
@@ -69,6 +78,18 @@ public class ProductAggregate {
     public void on(ReserveCancelledEvent event){
         stock +=event.getAmount();
         LOGGER.info("Reservation rollback, product {} stock changed to {}", id, stock);
+    }
+
+    @EventHandler
+    public void on(IncreaseStockEvent event){
+        stock = stock + event.getNumber();
+        LOGGER.info("Product {} stock increase {}, current value: {}", id, event.getNumber(), stock);
+    }
+
+    @EventHandler
+    public void on(DecreaseStockEvent event){
+        stock = stock - event.getNumber();
+        LOGGER.info("Product {} stock decrease {}, current value: {}", id, event.getNumber(), stock);
     }
 
     public String getName() {
