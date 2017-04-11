@@ -32,6 +32,13 @@ public class ProductAggregate {
     public ProductAggregate() {
     }
 
+    public ProductAggregate(String id, String name, int stock, long price) {
+        this.id = id;
+        this.name = name;
+        this.stock = stock;
+        this.price = price;
+    }
+
     @CommandHandler
     public ProductAggregate(CreateProductCommand command) {
         apply(new ProductCreatedEvent(command.getId(),command.getName(),command.getPrice(),command.getStock()));
