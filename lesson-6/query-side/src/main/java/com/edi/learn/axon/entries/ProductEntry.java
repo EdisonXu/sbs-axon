@@ -43,7 +43,7 @@ public class ProductEntry {
         this.name = name;
     }
 
-    public long getStock() {
+    public int getStock() {
         return stock;
     }
 

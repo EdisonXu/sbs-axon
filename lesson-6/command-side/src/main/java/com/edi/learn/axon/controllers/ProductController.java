@@ -6,7 +6,6 @@ import com.edi.learn.axon.commands.CreateProductCommand;
 import com.edi.learn.axon.commands.DecreaseStockCommand;
 import com.edi.learn.axon.commands.IncreaseStockCommand;
 import org.axonframework.commandhandling.CommandExecutionException;
-import org.axonframework.commandhandling.callbacks.LoggingCallback;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.model.ConcurrencyException;
 import org.slf4j.Logger;
@@ -67,7 +66,8 @@ public class ProductController {
 
         try {
             // multiply 100 on the price to avoid float number
-            commandGateway.send(command, LoggingCallback.INSTANCE);
+            //commandGateway.send(command, LoggingCallback.INSTANCE);
+            commandGateway.sendAndWait(command);
             response.setStatus(HttpServletResponse.SC_OK);// Set up the 201 CREATED response
             return;
         } catch (CommandExecutionException cex) {

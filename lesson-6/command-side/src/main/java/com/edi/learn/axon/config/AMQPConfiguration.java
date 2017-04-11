@@ -1,6 +1,7 @@
 package com.edi.learn.axon.config;
 
 import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,19 +11,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AMQPConfiguration {
 
+    @Value("${axon.amqp.exchange}")
+    private String exchangeName;
+
     @Bean
     public Queue productQueue(){
-        return new Queue("product", true);
+        return new Queue("product", false);
     }
 
     @Bean
     public Queue orderQueue(){
-        return new Queue("order",true);
+        return new Queue("order",false);
     }
 
     @Bean
     public Exchange exchange(){
-        return ExchangeBuilder.topicExchange("Axon.EventBus").durable(true).build();
+        return ExchangeBuilder.topicExchange(exchangeName).durable(false).build();
     }
 
     @Bean
@@ -36,12 +40,24 @@ public class AMQPConfiguration {
     }
 
     /*@Bean
-    public SpringAMQPMessageSource myQueueMessageSource(AMQPMessageConverter messageConverter){
-        return new SpringAMQPMessageSource(messageConverter){
-
-            @RabbitListener(queues = "axon")
+    public SpringAMQPMessageSource productQueueMessageSource(Serializer serializer){
+        return new SpringAMQPMessageSource(serializer){
+            @RabbitListener(queues = "product")
             @Override
             public void onMessage(Message message, Channel channel) throws Exception {
+                LOGGER.debug("Product message received: "+message.toString());
+                super.onMessage(message, channel);
+            }
+        };
+    }
+
+    @Bean
+    public SpringAMQPMessageSource orderQueueMessageSource(Serializer serializer){
+        return new SpringAMQPMessageSource(serializer){
+            @RabbitListener(queues = "order")
+            @Override
+            public void onMessage(Message message, Channel channel) throws Exception {
+                LOGGER.debug("Order message received: "+message.toString());
                 super.onMessage(message, channel);
             }
         };

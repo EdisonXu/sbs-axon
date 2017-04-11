@@ -25,14 +25,14 @@ public class ProductEventHandler {
     ProductEntryRepository repository;
 
     @EventHandler
-    public void handle(ProductCreatedEvent event){
+    public void on(ProductCreatedEvent event){
         // update the data in the cache or db of the query side
         LOGGER.debug("repository data is updated");
         repository.save(new ProductEntry(event.getId(), event.getName(), event.getPrice(), event.getStock()));
     }
 
     @EventHandler
-    public void handle(ProductReservedEvent event){
+    public void on(ProductReservedEvent event){
         ProductEntry product = repository.findOne(event.getProductId());
         if(product==null){
             LOGGER.error("Cannot find product with id {}", product.getId());
@@ -43,7 +43,7 @@ public class ProductEventHandler {
     }
 
     @EventHandler
-    public void handle(ReserveCancelledEvent event){
+    public void on(ReserveCancelledEvent event){
         ProductEntry product = repository.findOne(event.getProductId());
         if(product==null){
             LOGGER.error("Cannot find product with id {}", product.getId());

@@ -9,7 +9,6 @@ import org.axonframework.mongo.eventsourcing.eventstore.MongoFactory;
 import org.axonframework.mongo.eventsourcing.eventstore.MongoTemplate;
 import org.axonframework.mongo.eventsourcing.eventstore.documentperevent.DocumentPerEventStorageStrategy;
 import org.axonframework.serialization.Serializer;
-import org.axonframework.serialization.json.JacksonSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,15 +33,15 @@ public class AxonConfiguration {
     @Value("${mongodb.events.snapshot.collection.name}")
     private String snapshotCollectionName;
 
-    @Bean
+    /*@Bean
     public Serializer axonJsonSerializer() {
         return new JacksonSerializer();
-    }
+    }*/
 
     @Bean
-    public EventStorageEngine eventStorageEngine(){
+    public EventStorageEngine eventStorageEngine(Serializer serializer){
         return new MongoEventStorageEngine(
-                axonJsonSerializer(),null, axonMongoTemplate(), new DocumentPerEventStorageStrategy());
+                serializer,null, axonMongoTemplate(), new DocumentPerEventStorageStrategy());
     }
 
     @Bean(name = "axonMongoTemplate")

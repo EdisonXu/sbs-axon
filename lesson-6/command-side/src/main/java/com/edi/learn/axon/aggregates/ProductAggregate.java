@@ -5,6 +5,7 @@ import com.edi.learn.axon.commands.DecreaseStockCommand;
 import com.edi.learn.axon.commands.IncreaseStockCommand;
 import com.edi.learn.axon.domain.OrderId;
 import com.edi.learn.axon.events.product.*;
+import com.edi.learn.axon.exceptions.NoEnoughStockException;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventhandling.EventHandler;
@@ -37,13 +38,16 @@ public class ProductAggregate {
     }
 
     @CommandHandler
-    public void handle(IncreaseStockCommand command) {
+    public void handle(IncreaseStockCommand command) throws NoEnoughStockException {
         apply(new IncreaseStockEvent(command.getId(),command.getNumber()));
     }
 
     @CommandHandler
     public void handle(DecreaseStockCommand command) {
-        apply(new DecreaseStockEvent(command.getId(),command.getNumber()));
+        if(stock>=command.getNumber())
+            apply(new DecreaseStockEvent(command.getId(),command.getNumber()));
+        else
+            throw new NoEnoughStockException("No enough items");
     }
 
     @EventHandler
