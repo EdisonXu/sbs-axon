@@ -3,7 +3,7 @@ package com.edi.learn.cloud.command.saga;
 import com.edi.learn.cloud.commands.order.ConfirmOrderCommand;
 import com.edi.learn.cloud.commands.order.RollbackOrderCommand;
 import com.edi.learn.cloud.commands.product.ReserveProductCommand;
-import com.edi.learn.cloud.commands.product.RollbackReserveCommand;
+import com.edi.learn.cloud.commands.product.RollbackReservationCommand;
 import com.edi.learn.cloud.domain.OrderId;
 import com.edi.learn.cloud.domain.OrderProduct;
 import com.edi.learn.cloud.events.order.OrderCancelledEvent;
@@ -71,7 +71,7 @@ public class OrderSaga {
                 if(!product.isReserved())
                     return;
                 toRollback.put(id, product);
-                commandGateway.send(new RollbackReserveCommand(orderIdentifier, id, product.getAmount()));
+                commandGateway.send(new RollbackReservationCommand(orderIdentifier, id, product.getAmount()));
             });
             if(toRollback.isEmpty())
                 commandGateway.send(new RollbackOrderCommand(orderIdentifier));

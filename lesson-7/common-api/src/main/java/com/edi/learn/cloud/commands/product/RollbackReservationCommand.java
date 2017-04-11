@@ -7,17 +7,17 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier;
 /**
  * Created by Edison Xu on 2017/3/15.
  */
-public class RollbackReserveCommand {
+public class RollbackReservationCommand {
 
     @TargetAggregateIdentifier
     private OrderId orderId;
     private String productId;
     private int number;
 
-    public RollbackReserveCommand() {
+    public RollbackReservationCommand() {
     }
 
-    public RollbackReserveCommand(OrderId orderId, String productId, int number) {
+    public RollbackReservationCommand(OrderId orderId, String productId, int number) {
         this.orderId = orderId;
         this.productId = productId;
         this.number = number;
