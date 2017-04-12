@@ -21,17 +21,17 @@ public class AMQPConfiguration {
 
     @Bean
     public Queue productQueue(){
-        return new Queue("product", true);
+        return new Queue("product", false);
     }
 
     @Bean
     public Queue orderQueue(){
-        return new Queue("order",true);
+        return new Queue("order",false);
     }
 
     @Bean
     public Exchange exchange(){
-        return ExchangeBuilder.topicExchange(exchangeName).durable(true).build();
+        return ExchangeBuilder.topicExchange(exchangeName).durable(false).build();
     }
 
     @Bean

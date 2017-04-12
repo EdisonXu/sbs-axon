@@ -33,7 +33,7 @@ spring:
 # Discovery Server Access
 eureka:
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
   client:
     fetchRegistry: true
     serviceUrl:

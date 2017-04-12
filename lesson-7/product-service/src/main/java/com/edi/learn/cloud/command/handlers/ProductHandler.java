@@ -1,7 +1,6 @@
 package com.edi.learn.cloud.command.handlers;
 
 import com.edi.learn.cloud.command.aggregates.ProductAggregate;
-import com.edi.learn.cloud.commands.product.CreateProductCommand;
 import com.edi.learn.cloud.commands.product.ReserveProductCommand;
 import com.edi.learn.cloud.commands.product.RollbackReservationCommand;
 import org.axonframework.commandhandling.CommandHandler;
@@ -24,10 +23,10 @@ public class ProductHandler {
     @Autowired
     private Repository<ProductAggregate> repository;
 
-    @CommandHandler
+    /*@CommandHandler
     public void on(CreateProductCommand command) throws Exception {
         repository.newInstance(()->new ProductAggregate(command.getId(), command.getName(), command.getStock(), command.getPrice()));
-    }
+    }*/
 
     @CommandHandler
     public void on(ReserveProductCommand command){
