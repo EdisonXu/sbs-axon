@@ -32,9 +32,9 @@ public class ProductAggregate {
     public ProductAggregate() {
     }
 
-    /*public ProductAggregate(String id, String name, int stock, long price) {
+    public ProductAggregate(String id, String name, int stock, long price) {
         apply(new ProductCreatedEvent(id, name, price, stock));
-    }*/
+    }
 
     @CommandHandler
     public ProductAggregate(CreateProductCommand command) {

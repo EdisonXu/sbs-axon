@@ -41,7 +41,7 @@ public class OrderSaga {
     private boolean needRollback;
 
     @Autowired
-    private CommandGateway commandGateway;
+    private transient CommandGateway commandGateway;
 
     @StartSaga
     @SagaEventHandler(associationProperty = "orderId")

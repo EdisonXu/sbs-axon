@@ -42,13 +42,21 @@ eureka:
 server:
   port: 8081 #HTTP(Tomcat) port
 
-# enable axon Amqp support
+# enable Spring Cloud support of Axon
 axon:
-  amqp:
-    exchange: Axon.EventBus
   distributed:
     enabled: true
-    jgroups:
-      enabled: false
-      gossip:
-        autoStart: false
+  #  jgroups:
+  #    enabled: false
+  #    gossip:
+  #      autoStart: false
+  amqp:
+    exchange: amq.fanout
+  eventhandling:
+    processors:
+      ordersaga:
+        source: queueMessageSource
+      orderservice:
+        source: queueMessageSource
+      order:
+        source: queueMessageSource

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PersistenceConfiguration {
 
-    @Bean(name = "productRepository")
+    @Bean()
     public Repository<OrderAggregate> repository(EventStore eventStore){
         return new EventSourcingRepository<OrderAggregate>(OrderAggregate.class, eventStore);
     }

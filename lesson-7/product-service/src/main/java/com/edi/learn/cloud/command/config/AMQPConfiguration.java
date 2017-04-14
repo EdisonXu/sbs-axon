@@ -1,9 +1,13 @@
 package com.edi.learn.cloud.command.config;
 
-import org.springframework.amqp.core.*;
+import org.slf4j.Logger;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Created by Edison on 2017/3/25.
@@ -11,41 +15,34 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AMQPConfiguration {
 
+    private static final Logger LOGGER = getLogger(AMQPConfiguration.class);
+
     @Value("${axon.amqp.exchange}")
     private String exchangeName;
 
     @Bean
-    public Queue productQueue(){
-        return new Queue("product", false);
-    }
-
-    @Bean
-    public Queue orderQueue(){
-        return new Queue("order",false);
-    }
-
-    @Bean
     public Exchange exchange(){
-        return ExchangeBuilder.topicExchange(exchangeName).durable(false).build();
+        return ExchangeBuilder.fanoutExchange(exchangeName).durable(true).build();
     }
 
-    @Bean
-    public Binding productQueueBinding() {
-        return BindingBuilder.bind(productQueue()).to(exchange()).with("#.product.#").noargs();
-    }
-
-    @Bean
-    public Binding orderQueueBinding() {
-        return BindingBuilder.bind(orderQueue()).to(exchange()).with("#.order.#").noargs();
-    }
 
     /*@Bean
-    public SpringAMQPMessageSource myQueueMessageSource(AMQPMessageConverter messageConverter){
-        return new SpringAMQPMessageSource(messageConverter){
+    public Queue queue(){
+        return new Queue("productqueue", true);
+    }
 
-            @RabbitListener(queues = "axon")
+    @Bean
+    public Binding queueBinding() {
+        return BindingBuilder.bind(queue()).to(exchange()).with("").noargs();
+    }
+
+    @Bean
+    public SpringAMQPMessageSource queueMessageSource(Serializer serializer){
+        return new SpringAMQPMessageSource(serializer){
+            @RabbitListener(queues = "productqueue")
             @Override
             public void onMessage(Message message, Channel channel) throws Exception {
+                LOGGER.debug("Message received: "+message.toString());
                 super.onMessage(message, channel);
             }
         };
