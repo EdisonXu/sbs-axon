@@ -54,5 +54,5 @@ axon:
       exchange: amq.fanout
   eventhandling:
       processors:
-        ordersaga:
+        product:
           source: queueMessageSource

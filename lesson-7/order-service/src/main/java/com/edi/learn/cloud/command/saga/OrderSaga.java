@@ -13,7 +13,6 @@ import com.edi.learn.cloud.events.product.ProductNotEnoughEvent;
 import com.edi.learn.cloud.events.product.ProductReservedEvent;
 import com.edi.learn.cloud.events.product.ReserveCancelledEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.saga.EndSaga;
 import org.axonframework.eventhandling.saga.SagaEventHandler;
 import org.axonframework.eventhandling.saga.StartSaga;
@@ -30,7 +29,6 @@ import static org.slf4j.LoggerFactory.getLogger;
  * Created by Edison Xu on 2017/3/15.
  */
 @Saga
-@ProcessingGroup("ordersaga")
 public class OrderSaga {
 
     private static final Logger LOGGER = getLogger(OrderSaga.class);
