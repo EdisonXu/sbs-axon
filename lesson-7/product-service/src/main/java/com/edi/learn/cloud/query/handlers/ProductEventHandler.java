@@ -5,7 +5,6 @@ import com.edi.learn.cloud.events.product.ProductReservedEvent;
 import com.edi.learn.cloud.events.product.ReserveCancelledEvent;
 import com.edi.learn.cloud.query.entries.ProductEntry;
 import com.edi.learn.cloud.query.repository.ProductEntryRepository;
-import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import static org.slf4j.LoggerFactory.getLogger;
  * Created by Edison Xu on 2017/3/7.
  */
 @Component
-@ProcessingGroup("product")
 public class ProductEventHandler {
 
     private static final Logger LOGGER = getLogger(ProductEventHandler.class);

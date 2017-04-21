@@ -1,11 +1,7 @@
 package com.edi.learn.cloud.command.config;
 
-import com.rabbitmq.client.Channel;
-import org.axonframework.amqp.eventhandling.spring.SpringAMQPMessageSource;
-import org.axonframework.serialization.Serializer;
 import org.slf4j.Logger;
 import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,20 +34,5 @@ public class AMQPConfiguration {
     public Binding queueBinding() {
         return BindingBuilder.bind(queue()).to(exchange()).with("").noargs();
     }
-    @Bean
-    public SpringAMQPMessageSource queueMessageSource(Serializer serializer){
-        return new SpringAMQPMessageSource(serializer){
-            @RabbitListener(queues = "productqueue")
-            @Override
-            public void onMessage(Message message, Channel channel) throws Exception {
-                LOGGER.debug("Message received: "+message.toString());
-                try {
-                    super.onMessage(message, channel);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    throw e;
-                }
-            }
-        };
-    }
+
 }

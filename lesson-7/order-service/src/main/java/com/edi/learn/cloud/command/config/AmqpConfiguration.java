@@ -4,9 +4,6 @@ import com.edi.learn.cloud.command.saga.OrderSaga;
 import com.rabbitmq.client.Channel;
 import org.axonframework.amqp.eventhandling.spring.SpringAMQPMessageSource;
 import org.axonframework.config.SagaConfiguration;
-import org.axonframework.eventhandling.EventMessage;
-import org.axonframework.messaging.MessageHandlerInterceptor;
-import org.axonframework.messaging.SubscribableMessageSource;
 import org.axonframework.messaging.interceptors.TransactionManagingInterceptor;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.spring.messaging.unitofwork.SpringTransactionManager;
@@ -19,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import java.util.function.Function;
+import javax.transaction.Transactional;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -58,6 +55,7 @@ public class AmqpConfiguration {
         return new SpringAMQPMessageSource(serializer){
             @RabbitListener(queues = "orderqueue")
             @Override
+            @Transactional
             public void onMessage(Message message, Channel channel) throws Exception {
                 LOGGER.debug("Message received: "+message.toString());
                 super.onMessage(message, channel);
@@ -67,11 +65,8 @@ public class AmqpConfiguration {
 
     @Bean
     public SagaConfiguration<OrderSaga> orderSagaConfiguration(Serializer serializer){
-        Function<org.axonframework.config.Configuration, SubscribableMessageSource<EventMessage<?>>> func = c-> queueMessageSource(serializer);
-        SagaConfiguration<OrderSaga> sagaConfiguration = SagaConfiguration.subscribingSagaManager(OrderSaga.class, func);
-        Function<org.axonframework.config.Configuration, MessageHandlerInterceptor<? super EventMessage<?>>> interceptorBuilder =
-                c->transactionManagingInterceptor();
-        sagaConfiguration.registerHandlerInterceptor(interceptorBuilder);
+        SagaConfiguration<OrderSaga> sagaConfiguration = SagaConfiguration.subscribingSagaManager(OrderSaga.class, c-> queueMessageSource(serializer));
+        //sagaConfiguration.registerHandlerInterceptor(c->transactionManagingInterceptor());
         return sagaConfiguration;
     }
 

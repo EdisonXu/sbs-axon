@@ -52,7 +52,3 @@ axon:
   #      autoStart: false
   amqp:
       exchange: amq.fanout
-  eventhandling:
-      processors:
-        product:
-          source: queueMessageSource
