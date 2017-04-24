@@ -46,9 +46,5 @@ server:
 axon:
   distributed:
     enabled: true
-  #  jgroups:
-  #    enabled: false
-  #    gossip:
-  #      autoStart: false
   amqp:
       exchange: amq.fanout

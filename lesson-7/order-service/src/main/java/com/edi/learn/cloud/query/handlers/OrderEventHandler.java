@@ -1,12 +1,11 @@
 package com.edi.learn.cloud.query.handlers;
 
-import com.edi.learn.cloud.query.entries.OrderEntry;
-import com.edi.learn.cloud.query.entries.OrderProductEntry;
-import com.edi.learn.cloud.query.repository.OrderEntryRepository;
 import com.edi.learn.cloud.events.order.OrderCancelledEvent;
 import com.edi.learn.cloud.events.order.OrderConfirmedEvent;
 import com.edi.learn.cloud.events.order.OrderCreatedEvent;
-import org.axonframework.config.ProcessingGroup;
+import com.edi.learn.cloud.query.entries.OrderEntry;
+import com.edi.learn.cloud.query.entries.OrderProductEntry;
+import com.edi.learn.cloud.query.repository.OrderEntryRepository;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import static org.slf4j.LoggerFactory.getLogger;
  * Created by Edison Xu on 2017/3/15.
  */
 @Component
-@ProcessingGroup("order")
 public class OrderEventHandler {
 
     private static final Logger LOGGER = getLogger(OrderEventHandler.class);
