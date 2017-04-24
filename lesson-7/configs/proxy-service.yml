@@ -2,22 +2,28 @@ spring:
   application:
     name: proxy-service
 
-# HTTP Server
-server:
-  port: 1112 #HTTP(Tomcat) port
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${config.host:10.1.110.21}:1111/eureka/
 
 zuul:
   ignoredServices: '*'
   routes:
-    product-service: /product/**
-    order-service: /order/**
-
-proxy:
-  auth:
-    routes:
-      echo: none
-
-security:
-  user:
-    name: test
-    password: test
+    product_command_path:
+      path: /product/**
+      stripPrefix: false
+      serviceId: product-service
+    product_query_path:
+      path: /products/**
+      stripPrefix: false
+      serviceId: product-service
+    order-command_path:
+      serviceId: order-service
+      path: /order/**
+      stripPrefix: false
+    order_query_path:
+      serviceId: order-service
+      path: /orders/**
+      stripPrefix: false

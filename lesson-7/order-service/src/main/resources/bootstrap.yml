@@ -40,7 +40,7 @@ eureka:
     prefer-ip-address: true
 
 server:
-  port: 8081 #HTTP(Tomcat) port
+  port: 0 #HTTP(Tomcat) port
 
 # enable Spring Cloud support of Axon
 axon:

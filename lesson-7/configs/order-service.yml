@@ -1,6 +1,6 @@
 spring:
   application:
-    name: product-service
+    name: order-service
   datasource:
       url: jdbc:mysql://10.1.110.21:3306/cqrs
       driverClassName: com.mysql.jdbc.Driver
@@ -26,17 +26,17 @@ spring:
 
 # Discovery Server Access
 eureka:
-  instance:
-    prefer-ip-address: false
   client:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://${config.host:10.1.110.21}:1111/eureka/
+  instance:
+    prefer-ip-address: true
 
 server:
-  port: 8083 #HTTP(Tomcat) port
+  port: 0 #HTTP(Tomcat) port
 
-# enable spring cloud support of Axon
+# enable Spring Cloud support of Axon
 axon:
   distributed:
     enabled: true
@@ -45,4 +45,12 @@ axon:
   #    gossip:
   #      autoStart: false
   amqp:
-      exchange: amq.fanout
+    exchange: amq.fanout
+  eventhandling:
+    processors:
+      ordersaga:
+        source: queueMessageSource
+      orderservice:
+        source: queueMessageSource
+      order:
+        source: queueMessageSource

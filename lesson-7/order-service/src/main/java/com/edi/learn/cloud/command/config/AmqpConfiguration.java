@@ -75,19 +75,4 @@ public class AmqpConfiguration {
         return new TransactionManagingInterceptor(new SpringTransactionManager(transactionManager));
     }
 
-    /*@Bean
-    public TransactionManager axonTransactionManager() {
-        return new SpringTransactionManager(transactionManager);
-    }
-
-    @Bean
-    public EntityManagerProvider entityManagerProvider() {
-        return new ContainerManagedEntityManagerProvider();
-    }
-
-    @Bean
-    public SagaStore<OrderSaga> sagaStore(){
-        SagaStore jpaSagaStore = new JpaSagaStore(entityManagerProvider());
-        return jpaSagaStore;
-    }*/
 }
