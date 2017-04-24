@@ -11,7 +11,7 @@ spring:
       sql-script-encoding: UTF-8
   jpa:
     show-sql: true
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
   # mq for event bus
   rabbitmq:
     host: 112.124.34.47

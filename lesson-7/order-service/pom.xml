@@ -12,14 +12,17 @@
     <artifactId>order-service</artifactId>
 
     <dependencies>
+        <!-- common -->
         <dependency>
             <groupId>com.edi.learn</groupId>
             <artifactId>common-api</artifactId>
             <version>7</version>
         </dependency>
+
+        <!-- Axon -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
             <groupId>org.axonframework</groupId>
@@ -27,26 +30,40 @@
             <version>${axon.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <!--<dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-spring-boot-starter-jgroups</artifactId>
-            <version>${axon.version}</version>
-        </dependency>-->
-        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-distributed-commandbus-springcloud</artifactId>
             <version>${axon.version}</version>
         </dependency>
         <dependency>
             <groupId>org.axonframework</groupId>
-            <artifactId>axon-spring-boot-autoconfigure</artifactId>
+            <artifactId>axon-amqp</artifactId>
+        </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!-- Other -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 
