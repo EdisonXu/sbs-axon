@@ -10,6 +10,9 @@ public class ProductCreatedEvent {
     private long price;
     private int stock;
 
+    /**
+     * If no empty args constructor, jackson will throw serialization exceptions
+     */
     public ProductCreatedEvent() {
     }
 
