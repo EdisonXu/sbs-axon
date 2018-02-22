@@ -16,6 +16,9 @@ public class OrderCreatedEvent {
     private String username;
     private Map<String, OrderProduct> products;
 
+    public OrderCreatedEvent() {
+    }
+
     public OrderCreatedEvent(OrderId orderId, String username, Map<String, OrderProduct> products) {
         this.orderId = orderId;
         this.username = username;
