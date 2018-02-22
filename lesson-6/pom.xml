@@ -13,7 +13,7 @@
     <version>6</version>
     <packaging>pom</packaging>
     <modules>
-        <module>common-api</module>
+        <module>common-part</module>
         <module>command-side</module>
         <module>query-side</module>
     </modules>
@@ -26,12 +26,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-validator</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.axonframework</groupId>

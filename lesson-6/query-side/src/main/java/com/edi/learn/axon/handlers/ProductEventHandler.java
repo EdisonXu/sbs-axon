@@ -1,9 +1,7 @@
 package com.edi.learn.axon.handlers;
 
 import com.edi.learn.axon.entries.ProductEntry;
-import com.edi.learn.axon.events.product.ProductCreatedEvent;
-import com.edi.learn.axon.events.product.ProductReservedEvent;
-import com.edi.learn.axon.events.product.ReserveCancelledEvent;
+import com.edi.learn.axon.events.product.*;
 import com.edi.learn.axon.repository.ProductEntryRepository;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
@@ -27,14 +25,14 @@ public class ProductEventHandler {
     ProductEntryRepository repository;
 
     @EventHandler
-    public void handle(ProductCreatedEvent event){
+    public void on(ProductCreatedEvent event){
         // update the data in the cache or db of the query side
         LOGGER.debug("repository data is updated");
         repository.save(new ProductEntry(event.getId(), event.getName(), event.getPrice(), event.getStock()));
     }
 
     @EventHandler
-    public void handle(ProductReservedEvent event){
+    public void on(ProductReservedEvent event){
         ProductEntry product = repository.findOne(event.getProductId());
         if(product==null){
             LOGGER.error("Cannot find product with id {}", product.getId());
@@ -45,13 +43,35 @@ public class ProductEventHandler {
     }
 
     @EventHandler
-    public void handle(ReserveCancelledEvent event){
+    public void on(ReserveCancelledEvent event){
         ProductEntry product = repository.findOne(event.getProductId());
         if(product==null){
             LOGGER.error("Cannot find product with id {}", product.getId());
             return;
         }
         product.setStock(event.getAmount());
+        repository.save(product);
+    }
+
+    @EventHandler
+    public void on(IncreaseStockEvent event){
+        ProductEntry product = repository.findOne(event.getId());
+        if(product==null){
+            LOGGER.error("Cannot find product with id {}", product.getId());
+            return;
+        }
+        product.setStock(product.getStock()+event.getNumber());
+        repository.save(product);
+    }
+
+    @EventHandler
+    public void on(DecreaseStockEvent event){
+        ProductEntry product = repository.findOne(event.getId());
+        if(product==null){
+            LOGGER.error("Cannot find product with id {}", product.getId());
+            return;
+        }
+        product.setStock(product.getStock()-event.getNumber());
         repository.save(product);
     }
 }

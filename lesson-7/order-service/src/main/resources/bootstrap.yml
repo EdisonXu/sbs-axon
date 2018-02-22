@@ -17,7 +17,7 @@ spring:
       sql-script-encoding: UTF-8
   jpa:
     show-sql: true
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
   # mq for event bus
   rabbitmq:
     host: 112.124.34.47
@@ -40,15 +40,11 @@ eureka:
     prefer-ip-address: true
 
 server:
-  port: 8081 #HTTP(Tomcat) port
+  port: 0 #HTTP(Tomcat) port
 
-# enable axon Amqp support
+# enable Spring Cloud support of Axon
 axon:
-  amqp:
-    exchange: Axon.EventBus
   distributed:
     enabled: true
-    jgroups:
-      enabled: false
-      gossip:
-        autoStart: false
+  amqp:
+    exchange: amq.fanout

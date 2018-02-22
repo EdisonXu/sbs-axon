@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.edi.learn</groupId>
-            <artifactId>common-api</artifactId>
+            <artifactId>common-part</artifactId>
             <version>6</version>
         </dependency>
         <dependency>
@@ -23,5 +23,14 @@
             <version>${axon.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

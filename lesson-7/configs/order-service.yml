@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+      url: jdbc:mysql://10.1.110.21:3306/cqrs
+      driverClassName: com.mysql.jdbc.Driver
+      username: root
+      password: 111111
+      validation-query: SELECT 1;
+      initial-size: 2
+      sql-script-encoding: UTF-8
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: update
+  # mq for event bus
+  rabbitmq:
+    host: 112.124.34.47
+    port: 5672
+    username: axon
+    password: axon
+  data:
+    mongodb:
+      host: 10.1.110.24
+      port: 27017
+      database: axon
+
+# Discovery Server Access
+eureka:
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${config.host:10.1.110.21}:1111/eureka/
+  instance:
+    prefer-ip-address: true
+
+server:
+  port: 0 #HTTP(Tomcat) port
+
+# enable Spring Cloud support of Axon
+axon:
+  distributed:
+    enabled: true
+  #  jgroups:
+  #    enabled: false
+  #    gossip:
+  #      autoStart: false
+  amqp:
+    exchange: amq.fanout
+  eventhandling:
+    processors:
+      ordersaga:
+        source: queueMessageSource
+      orderservice:
+        source: queueMessageSource
+      order:
+        source: queueMessageSource

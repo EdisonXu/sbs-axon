@@ -6,10 +6,30 @@ spring:
     config:
       discovery.enabled: true
       discovery.serviceId: config-service
-      failFast: true
+      failFast: false
 
 # Discovery Server Access
 eureka:
   client:
     serviceUrl:
       defaultZone: http://${config.host:10.1.110.21}:1111/eureka/
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    product_command_path:
+      path: /product/**
+      stripPrefix: false
+      serviceId: product-service
+    product_query_path:
+      path: /products/**
+      stripPrefix: false
+      serviceId: product-service
+    order-command_path:
+      serviceId: order-service
+      path: /order/**
+      stripPrefix: false
+    order_query_path:
+      serviceId: order-service
+      path: /orders/**
+      stripPrefix: false

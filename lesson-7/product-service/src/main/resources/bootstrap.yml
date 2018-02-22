@@ -33,7 +33,7 @@ spring:
 # Discovery Server Access
 eureka:
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
   client:
     fetchRegistry: true
     serviceUrl:
@@ -42,13 +42,9 @@ eureka:
 server:
   port: 8083 #HTTP(Tomcat) port
 
-# enable axon Amqp support
+# enable spring cloud support of Axon
 axon:
-  amqp:
-    exchange: Axon.EventBus
   distributed:
     enabled: true
-    jgroups:
-      enabled: false
-      gossip:
-        autoStart: false
+  amqp:
+      exchange: amq.fanout

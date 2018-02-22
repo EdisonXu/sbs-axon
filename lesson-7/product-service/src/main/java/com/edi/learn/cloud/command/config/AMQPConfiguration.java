@@ -1,8 +1,12 @@
 package com.edi.learn.cloud.command.config;
 
+import org.slf4j.Logger;
 import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Created by Edison on 2017/3/25.
@@ -10,40 +14,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AMQPConfiguration {
 
-    @Bean
-    public Queue productQueue(){
-        return new Queue("product", true);
-    }
+    private static final Logger LOGGER = getLogger(AMQPConfiguration.class);
 
-    @Bean
-    public Queue orderQueue(){
-        return new Queue("order",true);
-    }
+    @Value("${axon.amqp.exchange}")
+    private String exchangeName;
 
     @Bean
     public Exchange exchange(){
-        return ExchangeBuilder.topicExchange("Axon.EventBus").durable(true).build();
+        return ExchangeBuilder.fanoutExchange(exchangeName).durable(true).build();
+    }
+
+
+    @Bean
+    public Queue queue(){
+        return new Queue("productqueue", true);
     }
 
     @Bean
-    public Binding productQueueBinding() {
-        return BindingBuilder.bind(productQueue()).to(exchange()).with("#.product.#").noargs();
+    public Binding queueBinding() {
+        return BindingBuilder.bind(queue()).to(exchange()).with("").noargs();
     }
 
-    @Bean
-    public Binding orderQueueBinding() {
-        return BindingBuilder.bind(orderQueue()).to(exchange()).with("#.order.#").noargs();
-    }
-
-    /*@Bean
-    public SpringAMQPMessageSource myQueueMessageSource(AMQPMessageConverter messageConverter){
-        return new SpringAMQPMessageSource(messageConverter){
-
-            @RabbitListener(queues = "axon")
-            @Override
-            public void onMessage(Message message, Channel channel) throws Exception {
-                super.onMessage(message, channel);
-            }
-        };
-    }*/
 }

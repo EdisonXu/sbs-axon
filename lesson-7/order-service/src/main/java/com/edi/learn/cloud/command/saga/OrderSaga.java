@@ -3,15 +3,18 @@ package com.edi.learn.cloud.command.saga;
 import com.edi.learn.cloud.commands.order.ConfirmOrderCommand;
 import com.edi.learn.cloud.commands.order.RollbackOrderCommand;
 import com.edi.learn.cloud.commands.product.ReserveProductCommand;
-import com.edi.learn.cloud.commands.product.RollbackReserveCommand;
+import com.edi.learn.cloud.commands.product.RollbackReservationCommand;
 import com.edi.learn.cloud.domain.OrderId;
 import com.edi.learn.cloud.domain.OrderProduct;
 import com.edi.learn.cloud.events.order.OrderCancelledEvent;
 import com.edi.learn.cloud.events.order.OrderConfirmedEvent;
 import com.edi.learn.cloud.events.order.OrderCreatedEvent;
 import com.edi.learn.cloud.events.product.ProductNotEnoughEvent;
+import com.edi.learn.cloud.events.product.ProductReserveFailedEvent;
 import com.edi.learn.cloud.events.product.ProductReservedEvent;
 import com.edi.learn.cloud.events.product.ReserveCancelledEvent;
+import org.axonframework.commandhandling.CommandCallback;
+import org.axonframework.commandhandling.CommandMessage;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.saga.EndSaga;
 import org.axonframework.eventhandling.saga.SagaEventHandler;
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
@@ -41,7 +45,7 @@ public class OrderSaga {
     private boolean needRollback;
 
     @Autowired
-    private CommandGateway commandGateway;
+    private transient CommandGateway commandGateway;
 
     @StartSaga
     @SagaEventHandler(associationProperty = "orderId")
@@ -52,7 +56,23 @@ public class OrderSaga {
         toReserveNumber = toReserve.size();
         event.getProducts().forEach((id,product)->{
             ReserveProductCommand command = new ReserveProductCommand(orderIdentifier, id, product.getAmount());
-            commandGateway.send(command);
+            commandGateway.send(command, new CommandCallback(){
+
+                @Override
+                public void onSuccess(CommandMessage commandMessage, Object result) {
+                    LOGGER.debug("Send ReserveProductCommand successfully.");
+                }
+
+                @Override
+                public void onFailure(CommandMessage commandMessage, Throwable cause) {
+                    if(commandMessage.getPayload()==null){
+                        LOGGER.error("Msg payload is null!", cause);
+                        return;
+                    }
+                    ReserveProductCommand cmd = (ReserveProductCommand)commandMessage.getPayload();
+                    apply(new ProductReserveFailedEvent(cmd.getOrderId(), cmd.getProductId()));
+                }
+            });
         });
     }
 
@@ -65,13 +85,22 @@ public class OrderSaga {
             tryFinish();
     }
 
+    @SagaEventHandler(associationProperty = "orderId")
+    public void handle(ProductReserveFailedEvent event){
+        LOGGER.info("Reserve product {} failed", event.getProductId());
+        toReserveNumber--;
+        needRollback=true;
+        if(toReserveNumber==0)
+            tryFinish();
+    }
+
     private void tryFinish() {
         if(needRollback){
             toReserve.forEach((id, product)->{
                 if(!product.isReserved())
                     return;
                 toRollback.put(id, product);
-                commandGateway.send(new RollbackReserveCommand(orderIdentifier, id, product.getAmount()));
+                commandGateway.send(new RollbackReservationCommand(orderIdentifier, id, product.getAmount()));
             });
             if(toRollback.isEmpty())
                 commandGateway.send(new RollbackOrderCommand(orderIdentifier));

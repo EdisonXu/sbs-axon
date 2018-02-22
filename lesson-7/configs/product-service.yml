@@ -1,36 +1,48 @@
-# datasource config
 spring:
-  datasource: 
-    url: jdbc:mysql://10.1.110.21:3306/cqrs
-    driverClassName: com.mysql.jdbc.Driver
-    username: root
-    password: 111111
-    validation-query: SELECT 1;
-    initial-size: 2
-    sql-script-encoding: UTF-8
+  application:
+    name: product-service
+  datasource:
+      url: jdbc:mysql://10.1.110.21:3306/cqrs
+      driverClassName: com.mysql.jdbc.Driver
+      username: root
+      password: 111111
+      validation-query: SELECT 1;
+      initial-size: 2
+      sql-script-encoding: UTF-8
   jpa:
-    database: mysql
     show-sql: true
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
   # mq for event bus
   rabbitmq:
     host: 112.124.34.47
     port: 5672
     username: axon
     password: axon
+  data:
+    mongodb:
+      host: 10.1.110.24
+      port: 27017
+      database: axon
 
-# mongo for query
-mongo:
-  url: 112.124.34.47
-  port: 27017
-  dbname: axon
+# Discovery Server Access
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${config.host:10.1.110.21}:1111/eureka/
 
-# enable axon Amqp support
+server:
+  port: 8083 #HTTP(Tomcat) port
+
+# enable spring cloud support of Axon
 axon:
-  amqp:
-    exchange: Axon.EventBus
   distributed:
-    jgroups:
-      enabled: true
-      gossip:
-        autoStart: true
+    enabled: true
+  #  jgroups:
+  #    enabled: false
+  #    gossip:
+  #      autoStart: false
+  amqp:
+      exchange: amq.fanout

@@ -3,7 +3,7 @@ package com.edi.learn.cloud.command.controllers;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.edi.learn.cloud.commands.order.CreateOrderCommand;
-import org.axonframework.commandhandling.callbacks.LoggingCallback;
+import org.axonframework.commandhandling.CommandExecutionException;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,26 +38,28 @@ public class OrderController {
     public void create(@RequestBody(required = true) JSONObject input){
         LOGGER.info(input.toJSONString());
 
-        int responseCode = HttpServletResponse.SC_BAD_REQUEST;
-
-        if(input.containsKey("username") && input.containsKey("products")){
-            String username = input.getString("username");
-            JSONArray products = input.getJSONArray("products");
-            if(!StringUtils.isEmpty(username) && products.size()>0){
-                Map<String, Integer> map = new HashMap<>();
-                CreateOrderCommand command = new CreateOrderCommand(username, map);
-                for(Object each:products){
-                    JSONObject o = (JSONObject)each;
-                    if(!o.containsKey("id") || !o.containsKey("number"))
-                        return;
-                    map.put(o.getString("id"), o.getInteger("number"));
+        try{
+            if(input.containsKey("username") && input.containsKey("products")){
+                String username = input.getString("username");
+                JSONArray products = input.getJSONArray("products");
+                if(!StringUtils.isEmpty(username) && products.size()>0){
+                    Map<String, Integer> map = new HashMap<>();
+                    CreateOrderCommand command = new CreateOrderCommand(username, map);
+                    for(Object each:products){
+                        JSONObject o = (JSONObject)each;
+                        if(!o.containsKey("id") || !o.containsKey("number"))
+                            return;
+                        map.put(o.getString("id"), o.getInteger("number"));
+                    }
+                    //commandGateway.send(command, LoggingCallback.INSTANCE);
+                    commandGateway.sendAndWait(command);
+                    response.setStatus(HttpServletResponse.SC_CREATED);
                 }
-                commandGateway.send(command, LoggingCallback.INSTANCE);
-                responseCode = HttpServletResponse.SC_CREATED;
             }
+        }catch (CommandExecutionException cex){
+            LOGGER.warn("Add Command FAILED with Message: {}", cex.getMessage());
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
-        response.setStatus(responseCode);
     }
 
 
