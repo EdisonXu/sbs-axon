@@ -14,6 +14,7 @@ public class ProductCreatedEvent {
      * If no empty args constructor, jackson will throw serialization exceptions
      */
     public ProductCreatedEvent() {
+        System.out.println("Product event created");
     }
 
     public ProductCreatedEvent(String id, String name, long price, int stock) {
